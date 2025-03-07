@@ -10,12 +10,18 @@ import {
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../types/navigationTypes';
 
-const bgImage = require('../assets/images/home_bg.jpg');
+const bgImage = require('../../assets/images/home_bg.jpg');
 const screenDiamention = Dimensions.get('screen');
 
+type StackParamList = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+
 const HomeScreen = () => {
-  const [dimensions, setDimensions] = useState(screenDiamention);
+  const [dimensions] = useState(screenDiamention);
+  const navigation = useNavigation<StackParamList>();
 
   const popUpAnim = useRef(new Animated.Value(dimensions.height)).current;
 
@@ -67,7 +73,9 @@ const HomeScreen = () => {
             <Text style={{color: 'gray', fontFamily: 'AirbnbCereal-light'}}>
               Ultimate solution to your media capabilites
             </Text>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('HomeTabs')}
+              style={styles.btn}>
               <Icon name="arrow-top-right" size={46} color="#fff" />
             </TouchableOpacity>
           </View>
